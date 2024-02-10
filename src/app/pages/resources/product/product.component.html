@@ -1,0 +1,35 @@
+<mat-tab-group>
+  <mat-tab label="Lista de Produtos">
+    <section class="tab-content">
+
+    </section>
+  </mat-tab>
+  <mat-tab label="Cadastrar Produto">
+    <section class="tab-content">
+      <form [formGroup]="formProduct" class="form-save-product">
+        <div class="form-field">
+          <label>Nome: </label>
+          <input class="form-input" type="text" placeholder="ex: Calça Jeans Masc">
+        </div>
+        <div class="form-field-aligh-h">
+          <div class="form-field">
+            <label>Preço: </label>
+            <input class="form-input" type="number" placeholder="ex: 43.78">
+          </div>
+          <div class="form-field">
+            <label>Quantidade em estoque: </label>
+            <input class="form-input" type="number" placeholder="ex: 15">
+          </div>
+        </div>
+        <div class="form-submit-field">
+          <button>Cadastrar</button>
+        </div>
+    </form>
+    </section>
+  </mat-tab>
+  <mat-tab label="Modificar produto">
+    <section class="tab-content">
+      <h2>Produtos</h2>
+    </section>
+  </mat-tab>
+</mat-tab-group>

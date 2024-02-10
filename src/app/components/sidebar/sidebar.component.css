@@ -1,0 +1,13 @@
+.sidebar-container {
+  padding: 10px;
+}
+
+.link-item {
+  list-style: none;
+}
+
+.link-item * {
+  width: 100%;
+  text-align: start;
+  justify-content: start;
+}
