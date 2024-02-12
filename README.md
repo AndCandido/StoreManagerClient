@@ -1,1 +1,3 @@
 # StoreManagerClient
+
+in progress...
