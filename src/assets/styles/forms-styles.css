@@ -1,0 +1,24 @@
+form button {
+  color: #fff;
+  margin-left: 10px;
+}
+
+:host {
+  margin-top: 30px;
+  width: 70%;
+}
+
+.form-field-container > * {
+  width: 100%;
+}
+
+.form-field-horizontal-container {
+  display: flex;
+  gap: 10px;
+}
+
+.form-submit-field {
+  margin-top: 10px;
+  display: flex;
+  justify-content: end;
+}

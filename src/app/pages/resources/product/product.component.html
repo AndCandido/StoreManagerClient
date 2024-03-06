@@ -1,35 +1,60 @@
-<mat-tab-group>
-  <mat-tab label="Lista de Produtos">
+<mat-tab-group
+  [selectedIndex]="tabIndexSelected"
+  (selectedIndexChange)="setTabIndexSelected($event)"
+  animationDuration="0ms"
+>
+  <mat-tab label="Lista de Produtos" tabindex="0">
     <section class="tab-content">
+      <table mat-table [dataSource]="tableSource" class="productsTable">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>Id</th>
+          <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.name }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Preço</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.price }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="stockQuantity">
+          <th mat-header-cell *matHeaderCellDef>Qtd. Estotque</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.stockQuantity }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Data de cadastro</th>
+          <td mat-cell *matCellDef="let product">
+            {{ product.createdAt }}
+          </td>
+        </ng-container>
 
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="productClicked(row)"
+        ></tr>
+      </table>
     </section>
   </mat-tab>
-  <mat-tab label="Cadastrar Produto">
+  <mat-tab label="Cadastrar Produto" tabindex="1">
     <section class="tab-content">
-      <form [formGroup]="formProduct" class="form-save-product">
-        <div class="form-field">
-          <label>Nome: </label>
-          <input class="form-input" type="text" placeholder="ex: Calça Jeans Masc">
-        </div>
-        <div class="form-field-aligh-h">
-          <div class="form-field">
-            <label>Preço: </label>
-            <input class="form-input" type="number" placeholder="ex: 43.78">
-          </div>
-          <div class="form-field">
-            <label>Quantidade em estoque: </label>
-            <input class="form-input" type="number" placeholder="ex: 15">
-          </div>
-        </div>
-        <div class="form-submit-field">
-          <button>Cadastrar</button>
-        </div>
-    </form>
+      <app-product-form formType="register"></app-product-form>
     </section>
   </mat-tab>
-  <mat-tab label="Modificar produto">
+  <mat-tab label="Modificar produto" tabindex="2">
     <section class="tab-content">
-      <h2>Produtos</h2>
+      <app-product-form
+        [fieldValues]="productSelected"
+        formType="modify"
+      ></app-product-form>
     </section>
   </mat-tab>
 </mat-tab-group>

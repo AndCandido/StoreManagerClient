@@ -1,0 +1,35 @@
+mat-tab-group {
+  height: 100%;
+}
+
+:host {
+  margin-top: 30px;
+  width: 70%;
+}
+
+.tab-content {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+table tr {
+  height: 35px;
+  font-size: .8rem;
+}
+
+table th {
+  text-align: center;
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+  text-align: center;
+  padding: 10px;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  border-color: currentColor;
+}

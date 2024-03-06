@@ -1,10 +1,10 @@
 import ProductSold from "./ProductSold";
 
 export default class {
-  id?: string;
-  name!: string;
+  id: string = "";
+  name: string = "";
+  price: number = 0;
+  stockQuantity: number = 0;
   productsSold?: ProductSold[];
-  price!: number;
-  stockQuantity!: number;
-  createdAt?: Date;
+  createdAt: string = "";
 }

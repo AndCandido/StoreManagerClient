@@ -1,0 +1,99 @@
+<form [formGroup]="formGroup">
+  <div *ngIf="!isRegisterForm" class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Id</mat-label>
+      <input
+       matInput
+       type="text"
+       [value]="fieldValues.id"
+       formControlName="id"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input
+       matInput
+       type="text"
+       [value]="fieldValues.name"
+       formControlName="name"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Apelido</mat-label>
+      <input
+       matInput
+       type="text"
+       [value]="fieldValues.nickname"
+       formControlName="nickname"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="form-field-container form-field-horizontal-container">
+      <mat-form-field appearance="outline">
+        <mat-label>CPF</mat-label>
+        <input
+         matInput
+         type="text"
+         [value]="fieldValues.cpf"
+         maxlength="14"
+         (keydown)="onInputCpfChange($event)"
+         formControlName="cpf"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Telefone</mat-label>
+        <input
+         matInput
+         type="tel"
+         [value]="fieldValues.phone"
+         (keydown)="onInputPhoneChange($event)"
+         maxlength="15"
+         formControlName="phone"
+         />
+      </mat-form-field>
+  </div>
+
+  <div class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Endereço</mat-label>
+      <input
+       matInput
+       type="text"
+       [value]="fieldValues.address"
+       formControlName="address"
+      />
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="!isRegisterForm" class="form-field-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Data de cadastro</mat-label>
+      <input
+       matInput
+       type="text"
+       [value]="fieldValues.createdAt"
+       formControlName="createdAt"
+      />
+    </mat-form-field>
+  </div>
+  <div class="form-submit-field">
+    <button *ngIf="!isRegisterForm" mat-raised-button class="delete-button" color="warn">
+      Deletar
+    </button>
+    <button
+      mat-raised-button
+      class="submit-button"
+      [ngStyle]="{'background-color': isRegisterForm ? '#090' : '#f80'}"
+    >
+      {{ isRegisterForm ? "Cadastrar" : "Atualizar" }}
+    </button>
+  </div>
+</form>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder,  FormGroup } from "@angular/forms";
 import Product from "src/app/models/Product";
+import { ProductsService } from "src/app/services/products.service";
 
 @Component({
   selector: "app-product",
@@ -8,16 +9,28 @@ import Product from "src/app/models/Product";
   styleUrls: ["./product.component.css"]
 })
 export class ProductComponent implements OnInit {
+  tabIndexSelected = 0;
   formProduct!: FormGroup;
+  displayedColumns: string[] = ["id", "name", "price", "stockQuantity", "createdAt"];
+  tableSource!: Product[];
+  productSelected!: Product;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private productsService: ProductsService
   ) {}
 
   ngOnInit(): void {
+    this.productsService.getAllProducts().subscribe({
+      next: (value) => {
+        this.tableSource = value;
+      },
+      error(error) {
+        console.error(error);
+      }
+    });
     this.formProduct = this.createForm(new Product);
-
-    console.log(this.formProduct);
+    this.productSelected = new Product();
   }
 
   createForm(product: Product): FormGroup {
@@ -29,5 +42,14 @@ export class ProductComponent implements OnInit {
       stockQuantity: product.stockQuantity,
       createdAt: product.createdAt
     });
+  }
+
+  productClicked(row: Product) {
+    this.setTabIndexSelected(2);
+    this.productSelected = row;
+  }
+
+  setTabIndexSelected(num: number) {
+    this.tabIndexSelected = num;
   }
 }
