@@ -13,6 +13,7 @@ import { SaleComponent } from "./pages/resources/sale/sale.component";
 import { ResourcesModule } from "./pages/resources/resources.module";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HttpClientModule } from "@angular/common/http";
     SidebarComponent,
     CustomerComponent,
     SaleComponent,
+    DialogBoxComponent,
   ],
   imports: [
     BrowserModule,

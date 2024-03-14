@@ -63,10 +63,11 @@
   </div>
 
   <div class="form-submit-field">
-    <button *ngIf="!isRegisterForm" mat-raised-button class="delete-button" color="warn">
+    <button (click)="onDelete()" *ngIf="!isRegisterForm" mat-raised-button class="delete-button" color="warn">
       Deletar
     </button>
     <button
+      (click)="isRegisterForm ? onSave() : onUpdate()"
       mat-raised-button
       class="submit-button"
       [ngStyle]="{'background-color': isRegisterForm ? '#090' : '#f80'}"

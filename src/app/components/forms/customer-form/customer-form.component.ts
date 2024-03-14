@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { maskInput } from "src/app/utils/appUtils";
 import Customer from "src/app/models/Customer";
+import { EmitEventOptions } from "src/types/types";
 
 @Component({
   selector: "app-customer-form",
@@ -14,6 +15,9 @@ import Customer from "src/app/models/Customer";
 export class CustomerFormComponent implements OnInit {
   @Input({ required: true }) isRegisterForm!: boolean;
   @Input() fieldValues!: Customer;
+  @Output() eventOnRequest: EventEmitter<EmitEventOptions> = new EventEmitter();
+
+  eventOnRequestOptions: EmitEventOptions = { snackBarMessage: "" };
   formGroup!: FormGroup;
 
   constructor (private formBuilder: FormBuilder)

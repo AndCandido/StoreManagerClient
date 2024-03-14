@@ -1,0 +1,14 @@
+div.dialog-box {
+  padding: 20px;
+  overflow: hidden;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.actionOptions {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+}

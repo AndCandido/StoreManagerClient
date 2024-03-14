@@ -46,12 +46,13 @@
   </mat-tab>
   <mat-tab label="Cadastrar Produto" tabindex="1">
     <section class="tab-content">
-      <app-product-form formType="register"></app-product-form>
+      <app-product-form (eventOnRequest)="eventOnRequestHandler($event)" formType="register"></app-product-form>
     </section>
   </mat-tab>
   <mat-tab label="Modificar produto" tabindex="2">
     <section class="tab-content">
       <app-product-form
+        (eventOnRequest)="eventOnRequestHandler($event)"
         [fieldValues]="productSelected"
         formType="modify"
       ></app-product-form>

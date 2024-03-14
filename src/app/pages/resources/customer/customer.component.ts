@@ -34,7 +34,6 @@ export class CustomerComponent implements OnInit {
 
   itemSelected(customer: Customer) {
     this.setTabIndexSelected(2);
-    console.log(customer);
     this.setCustomerSelected(customer);
   }
 
