@@ -54,6 +54,21 @@ export class CustomerFormComponent implements OnInit, OnChanges {
     });
   }
 
+  searchCustomerById() {
+    const customerId = this.formGroup.value["id"];
+    if(!customerId) return;
+
+    this.customerService.getCustomerById(customerId).subscribe({
+      next: (value: Customer) => {
+        this.formGroup.patchValue(value);
+      },
+      error: () => {
+        this.setSnackBarMessage("Cliente não encontrado");
+        this.emitOnRequestEvent();
+      }
+    });
+  }
+
   onSave() {
     if(!this.formGroup.valid) return;
 
