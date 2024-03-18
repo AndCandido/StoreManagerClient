@@ -88,10 +88,11 @@
     <mat-form-field appearance="outline">
       <mat-label>Data de cadastro</mat-label>
       <input
-       matInput
-       type="text"
-       [value]="fieldValues.createdAt"
-       formControlName="createdAt"
+        readonly
+        matInput
+        type="text"
+        [value]="fieldValues.createdAt"
+        formControlName="createdAt"
       />
     </mat-form-field>
   </div>
