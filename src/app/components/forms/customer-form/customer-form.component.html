@@ -1,5 +1,5 @@
 <form [formGroup]="formGroup">
-  <div *ngIf="!isRegisterForm" class="form-field-container">
+  <div *ngIf="formType == 'modify'" class="form-field-container">
     <mat-form-field appearance="outline">
       <mat-label>Id</mat-label>
       <input
@@ -42,8 +42,9 @@
          matInput
          type="text"
          [value]="fieldValues.cpf"
+         inputmode="numeric"
+         mask="000.000.000-00"
          maxlength="14"
-         (keydown)="onInputCpfChange($event)"
          formControlName="cpf"
         />
       </mat-form-field>
@@ -54,7 +55,7 @@
          matInput
          type="tel"
          [value]="fieldValues.phone"
-         (keydown)="onInputPhoneChange($event)"
+         mask="(00) 00000-0000"
          maxlength="15"
          formControlName="phone"
          />
@@ -73,7 +74,7 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="!isRegisterForm" class="form-field-container">
+  <div *ngIf="formType == 'modify'" class="form-field-container">
     <mat-form-field appearance="outline">
       <mat-label>Data de cadastro</mat-label>
       <input
@@ -84,16 +85,15 @@
       />
     </mat-form-field>
   </div>
-  <div class="form-submit-field">
-    <button *ngIf="!isRegisterForm" mat-raised-button class="delete-button" color="warn">
-      Deletar
-    </button>
-    <button
-      mat-raised-button
-      class="submit-button"
-      [ngStyle]="{'background-color': isRegisterForm ? '#090' : '#f80'}"
-    >
-      {{ isRegisterForm ? "Cadastrar" : "Atualizar" }}
-    </button>
+  <div class="form-footer" [ngSwitch]="formType">
+    <app-footer-register-resource-form
+      (onSave)="onSave()"
+      *ngSwitchCase="'register'"
+    />
+    <app-footer-modify-resource-form
+      (onUpdate)="onUpdate()"
+      (onDelete)="onDelete()"
+      *ngSwitchCase="'modify'"
+     />
   </div>
 </form>

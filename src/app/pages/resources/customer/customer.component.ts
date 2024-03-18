@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import Customer from "src/app/models/Customer";
 import { CustomersService } from "src/app/services/customers.service";
+import { EmitEventOptions } from "src/types/types";
 
 @Component({
   selector: "app-customer",
@@ -13,10 +15,17 @@ export class CustomerComponent implements OnInit {
   customerSelected!: Customer;
   customers!: Customer[];
 
-  constructor(private customersService: CustomersService)
+  constructor(
+    private customersService: CustomersService,
+    private snackBar: MatSnackBar
+  )
   {}
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.customersService.getAllCustomers()
       .subscribe({
         next: (customers) => {
@@ -25,6 +34,19 @@ export class CustomerComponent implements OnInit {
         error(err) {
           console.error("Error: ", err);
         },
+      });
+  }
+
+  eventOnRequest(event: EmitEventOptions) {
+    this.openSnackBar(event.snackBarMessage);
+    this.loadData();
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, "Ver", { duration: 3000 })
+      .onAction()
+      .subscribe(() => {
+        this.tabIndexSelected = 0;
       });
   }
 

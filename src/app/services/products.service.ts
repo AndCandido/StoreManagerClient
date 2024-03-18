@@ -18,6 +18,10 @@ export class ProductsService {
     return this.http.get<Product[]>(this.resourceUrl, { headers: this.headers });
   }
 
+  getProductById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.resourceUrl}/${id}`, {headers: this.headers});
+  }
+
   saveProduct(product: Product): Observable<Product> {
     return this.http.post<Product>(this.resourceUrl, product, { headers: this.headers });
   }

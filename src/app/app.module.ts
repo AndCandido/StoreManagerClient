@@ -13,7 +13,8 @@ import { SaleComponent } from "./pages/resources/sale/sale.component";
 import { ResourcesModule } from "./pages/resources/resources.module";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { DialogBoxComponent } from './components/dialog-box/dialog-box.component';
+import { DialogBoxComponent } from "./components/dialog-box/dialog-box.component";
+import { SharedModule } from "./components/_shared/_shared.module";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { DialogBoxComponent } from './components/dialog-box/dialog-box.component
     MatButtonModule,
     MatSidenavModule,
     ResourcesModule,
+    SharedModule,
     FormsModule,
     HttpClientModule
   ],

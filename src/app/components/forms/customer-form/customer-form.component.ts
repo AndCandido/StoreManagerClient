@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { maskInput } from "src/app/utils/appUtils";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import Customer from "src/app/models/Customer";
-import { EmitEventOptions } from "src/types/types";
+import { DialogData, EmitEventOptions } from "src/types/types";
+import { CustomersService } from "src/app/services/customers.service";
+import { Observer } from "rxjs";
+import { DialogBoxComponent } from "../../dialog-box/dialog-box.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-customer-form",
@@ -12,15 +15,19 @@ import { EmitEventOptions } from "src/types/types";
     "../../../../assets/styles/forms-styles.css"
   ]
 })
-export class CustomerFormComponent implements OnInit {
-  @Input({ required: true }) isRegisterForm!: boolean;
+export class CustomerFormComponent implements OnInit, OnChanges {
+  @Input({ required: true }) formType!: "register" | "modify";
   @Input() fieldValues!: Customer;
   @Output() eventOnRequest: EventEmitter<EmitEventOptions> = new EventEmitter();
 
   eventOnRequestOptions: EmitEventOptions = { snackBarMessage: "" };
   formGroup!: FormGroup;
 
-  constructor (private formBuilder: FormBuilder)
+  constructor (
+    private formBuilder: FormBuilder,
+    private customerService: CustomersService,
+    private dialog: MatDialog
+  )
   {}
 
   ngOnInit(): void {
@@ -30,34 +37,114 @@ export class CustomerFormComponent implements OnInit {
     this.createFormGroup(new Customer);
   }
 
+  ngOnChanges(): void {
+    if(!this.formGroup) return;
+    this.formGroup.patchValue(this.fieldValues);
+  }
+
   createFormGroup(customer: Customer): FormGroup {
     return this.formGroup = this.formBuilder.group({
       id: customer.id,
-      name: customer.name,
+      name: [customer.name, [Validators.required, Validators.maxLength(70)]],
       nickname: customer.nickname,
-      cpf: customer.cpf,
-      address: customer.address,
+      cpf: [customer.cpf, [Validators.required]],
+      address: [customer.address, [Validators.required]],
       phone: customer.phone,
       createdAt: customer.createdAt
     });
   }
 
-  onInputCpfChange(event: Event) {
-    const charMaskPositions = new Map<number, string>();
-    charMaskPositions.set(3, ".");
-    charMaskPositions.set(7, ".");
-    charMaskPositions.set(11, "-");
+  onSave() {
+    if(!this.formGroup.valid) return;
 
-    maskInput(event, charMaskPositions);
+    const customer: Customer = this.formGroup.value;
+    this.saveCustomer(customer);
   }
 
-  onInputPhoneChange(event: Event) {
-    const charMaskPositions = new Map<number, string>();
-    charMaskPositions.set(0, "(");
-    charMaskPositions.set(3, ")");
-    charMaskPositions.set(4, " ");
-    charMaskPositions.set(10, "-");
+  saveCustomer(customer: Customer) {
+    this.customerService.saveCustomer(customer).subscribe(
+      this.subscribeOptions(
+        `${customer.name} cadastrado`,
+        `Erro ao cadastrar ${customer.name}`,
+        this.emitOnRequestEvent
+      )
+    );
+  }
 
-    maskInput(event, charMaskPositions);
+  onUpdate() {
+    const dialogRef = this.openDialog({
+      title: "Tem certeza que deseja atualizar esse cliente?"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const customer: Customer = this.formGroup.value;
+      if(result && this.formGroup.valid)
+        this.updateCustomer(customer);
+    });
+  }
+
+  updateCustomer(customer: Customer) {
+    if(!customer.id) return;
+
+    this.customerService.updateCustomer(customer).subscribe(
+      this.subscribeOptions(
+        `${customer.name} atualizado`,
+        `Erro ao atualizar ${customer.name}`,
+        this.emitOnRequestEvent
+      )
+    );
+  }
+
+  onDelete() {
+    const dialogRef = this.openDialog({
+      title: "Tem certeza que deseja deletar esse cliente?"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      const customer: Customer = this.formGroup.value;
+      if(result)
+        this.deleteCustomer(customer);
+    });
+  }
+
+  deleteCustomer(customer: Customer) {
+    if(!customer.id) return;
+
+    this.customerService.deleteCustomer(customer.id).subscribe(
+      this.subscribeOptions(
+        `${customer.name} deletado`,
+        `Erro ao deletar ${customer.name}`,
+        this.emitOnRequestEvent
+      )
+    );
+  }
+
+  openDialog(dialogData: DialogData) {
+    return this.dialog.open(DialogBoxComponent, {
+      data: dialogData
+    });
+  }
+
+  subscribeOptions(successMessage: string, errorMessage: string, cb: () => void): Partial<Observer<Customer>> {
+    return {
+      next: () => {
+        this.setSnackBarMessage(successMessage);
+      },
+      error: (err) => {
+        this.setSnackBarMessage(errorMessage);
+        console.error(err);
+      },
+      complete: () => {
+        cb.call(this);
+      }
+    };
+  }
+
+  setSnackBarMessage(message: string) {
+    this.eventOnRequestOptions.snackBarMessage = message;
+  }
+
+  emitOnRequestEvent() {
+    this.eventOnRequest.emit(this.eventOnRequestOptions);
   }
 }

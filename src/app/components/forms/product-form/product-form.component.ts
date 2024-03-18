@@ -5,6 +5,7 @@ import Product from "src/app/models/Product";
 import { ProductsService } from "src/app/services/products.service";
 import { DialogData, EmitEventOptions } from "src/types/types";
 import { DialogBoxComponent } from "../../dialog-box/dialog-box.component";
+import { Observer } from "rxjs";
 
 @Component({
   selector: "app-product-form",
@@ -20,7 +21,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
   @Output() eventOnRequest: EventEmitter<EmitEventOptions> = new EventEmitter();
 
   eventOnRequestOptions: EmitEventOptions = { snackBarMessage: "" };
-  isRegisterForm!: boolean;
   formGroup!: FormGroup;
 
   constructor(
@@ -33,7 +33,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
     if(!this.fieldValues) {
       this.fieldValues = new Product();
     }
-    this.isRegisterForm = this.formType == "register";
     this.formGroup = this.createFormGroup(this.fieldValues);
   }
 
@@ -49,6 +48,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
   createFormGroup(product: Product): FormGroup{
     return this.formBuilder.group({
       id: product.id,
+      ref: product.ref,
       name: [product.name, [Validators.required, Validators.max(50)]],
       price: [product.price, [Validators.required, Validators.min(0)]],
       stockQuantity: [product.stockQuantity, [Validators.required, Validators.min(0)]],
@@ -56,21 +56,34 @@ export class ProductFormComponent implements OnInit, OnChanges {
     });
   }
 
-  onSave() {
-    if(!this.formGroup.valid) return;
-
-    this.productService.saveProduct(this.formGroup.value).subscribe({
+  searchProductById() {
+    const id = this.formGroup.value["id"];
+    if(!id) return;
+    this.productService.getProductById(id).subscribe({
       next: (value: Product) => {
-        this.eventOnRequestOptions.snackBarMessage = value.name + " cadastrado";
+        this.formGroup.patchValue(value);
       },
-      error: (err) => {
-        this.eventOnRequestOptions.snackBarMessage = ("Error ao cadastrar o produto");
-        console.error(err);
-      },
-      complete: () => {
+      error: () => {
+        this.setSnackBarMessage("Produto não encontrado");
         this.emitOnRequestEvent();
       }
     });
+  }
+
+  onSave() {
+    if(!this.formGroup.valid) return;
+    const product: Product = this.formGroup.value;
+    this.saveProduct(product);
+  }
+
+  saveProduct(product: Product) {
+    this.productService.saveProduct(product).subscribe(
+      this.subscribeOptions(
+        `${product.name} cadastrado`,
+        `Erro ao cadastrar ${product.name}`,
+        this.emitOnRequestEvent
+      )
+    );
   }
 
   onUpdate() {
@@ -79,53 +92,64 @@ export class ProductFormComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
-      if(result) this.updateProduct();
+      const product: Product = this.formGroup.value;
+      if(result && this.formGroup.valid) this.updateProduct(product);
     });
   }
 
-  updateProduct() {
-    const product = this.formGroup.value;
-    if(!this.formGroup.valid || !product.id) return;
+  updateProduct(product: Product) {
+    if(!product.id) return;
 
-    this.productService.updateProduct(product).subscribe({
-      next: (value: Product) => {
-        this.eventOnRequestOptions.snackBarMessage = value.name + " atualizado";
-      },
-      error: (err) => {
-        this.eventOnRequestOptions.snackBarMessage = "Error ao atualizar o produto";
-        console.error(err);
-      },
-      complete: () => {
-        this.emitOnRequestEvent();
-      },
-    });
+    this.productService.updateProduct(product).subscribe(
+      this.subscribeOptions(
+        `${product.name} atualizado`,
+        `Erro ao atualizar ${product.name}`,
+        this.emitOnRequestEvent
+      )
+    );
   }
 
-  async onDelete() {
+  onDelete() {
     const dialogRef =
       this.openDialog({
-        title: "Tem certeza que quer deletar esse produto?",
+        title: "Tem certeza que deseja deletar esse produto?",
       });
 
     dialogRef.afterClosed().subscribe((canDelete: boolean) => {
-      if(canDelete) this.deleteProduct();
+      const product: Product = this.formGroup.value;
+      if(canDelete) this.deleteProduct(product);
     });
   }
 
-  deleteProduct() {
-    const product: Product = this.formGroup.value;
-    this.productService.deleteProduct(product.id).subscribe({
+  deleteProduct(product: Product) {
+    if(!product.id) return;
+
+    this.productService.deleteProduct(product.id).subscribe(
+      this.subscribeOptions(
+        `${product.name} deletado`,
+        `Erro ao deletar ${product.name}`,
+        this.emitOnRequestEvent
+      )
+    );
+  }
+
+  subscribeOptions(successMessage: string, errorMessage: string, cb: () => void): Partial<Observer<Product>> {
+    return {
       next: () => {
-        this.eventOnRequestOptions.snackBarMessage = product.name + " deletado";
+        this.setSnackBarMessage(successMessage);
       },
-      error: (error) => {
-        this.eventOnRequestOptions.snackBarMessage = "Error ao deletar " + product.name;
-        console.error(error);
+      error: (err) => {
+        this.setSnackBarMessage(errorMessage);
+        console.error(err);
       },
       complete: () => {
-        this.emitOnRequestEvent();
+        cb.call(this);
       }
-    });
+    };
+  }
+
+  setSnackBarMessage(message: string) {
+    this.eventOnRequestOptions.snackBarMessage = message;
   }
 
   openDialog(dialogData: DialogData) {

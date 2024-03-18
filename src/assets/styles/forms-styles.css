@@ -17,7 +17,7 @@ form button {
   gap: 10px;
 }
 
-.form-submit-field {
+.form-footer {
   margin-top: 10px;
   display: flex;
   justify-content: end;

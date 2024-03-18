@@ -1,13 +1,33 @@
 <form [formGroup]="formGroup" class="form-save-product">
-  <div *ngIf="!isRegisterForm" class="form-field-container">
-    <mat-form-field appearance="outline">
+  <div class="form-field-container form-field-horizontal-container">
+    <mat-form-field appearance="outline" *ngIf="formType == 'modify'">
       <mat-label>Id</mat-label>
       <input
         matInput
         type="text"
-        placeholder="ex: 1580232c-e8d5-4de2-bf1c-7d5ffc2c2ecb"
+        placeholder="ex: 4344"
         formControlName="id"
         [value]="fieldValues.id"
+      />
+      <button
+        type="button"
+        matSuffix
+        mat-icon-button
+        (click)="searchProductById()"
+      >
+        <span class="material-symbols-outlined search-icon">
+          search
+        </span>
+      </button>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ref</mat-label>
+      <input
+        matInput
+        type="number"
+        placeholder="ex: 77858482834"
+        formControlName="ref"
+        [value]="fieldValues.ref"
       />
     </mat-form-field>
   </div>
@@ -49,7 +69,7 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="!isRegisterForm" class="form-field-container">
+  <div *ngIf="formType == 'modify'" class="form-field-container">
     <mat-form-field appearance="outline">
       <mat-label>Data de cadastro</mat-label>
       <input
@@ -62,17 +82,17 @@
     </mat-form-field>
   </div>
 
-  <div class="form-submit-field">
-    <button (click)="onDelete()" *ngIf="!isRegisterForm" mat-raised-button class="delete-button" color="warn">
-      Deletar
-    </button>
-    <button
-      (click)="isRegisterForm ? onSave() : onUpdate()"
-      mat-raised-button
-      class="submit-button"
-      [ngStyle]="{'background-color': isRegisterForm ? '#090' : '#f80'}"
+  <div class="form-footer" [ngSwitch]="formType">
+    <app-footer-register-resource-form
+      (onSave)="onSave()"
+      *ngSwitchCase="'register'"
     >
-      {{ isRegisterForm ? "Cadastrar" : "Atualizar" }}
-    </button>
+    </app-footer-register-resource-form>
+    <app-footer-modify-resource-form
+      (onDelete)="onDelete()"
+      (onUpdate)="onUpdate()"
+      *ngSwitchCase="'modify'"
+    >
+    </app-footer-modify-resource-form>
   </div>
 </form>
