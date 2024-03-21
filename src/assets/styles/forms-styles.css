@@ -8,7 +8,7 @@ form button {
   width: 70%;
 }
 
-.form-field-container > * {
+.form-field-container > mat-form-field {
   width: 100%;
 }
 

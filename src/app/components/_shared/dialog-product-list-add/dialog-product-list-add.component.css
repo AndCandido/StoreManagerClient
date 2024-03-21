@@ -1,0 +1,21 @@
+:host > div {
+  padding: 20px;
+}
+
+.errorMessageContainer {
+  display: block;
+  padding: 5px;
+  width: 100%;
+  background-color: #f00a;
+  color: #fff;
+  font-size: .8rem;
+  font-weight: bold;
+  border-radius: 6px;
+  padding-left: 15px;
+}
+
+.actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: end;
+}

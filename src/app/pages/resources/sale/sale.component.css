@@ -1,0 +1,9 @@
+mat-tab-group {
+  height: 100%;
+}
+
+.tab-content {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}

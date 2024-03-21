@@ -5,7 +5,7 @@ import { CustomerComponent } from "./pages/resources/customer/customer.component
 import { SaleComponent } from "./pages/resources/sale/sale.component";
 
 const routes: Routes = [
-  { path: "", component: ProductComponent },
+  { path: "", component: SaleComponent },
   { path: "products", component: ProductComponent },
   { path: "customers", component: CustomerComponent },
   { path: "sales", component: SaleComponent },

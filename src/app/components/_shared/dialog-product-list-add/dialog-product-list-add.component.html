@@ -1,0 +1,83 @@
+<div>
+  <form [formGroup]="formGroup">
+    <div class="form-field-container form-field-horizontal-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Id</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ex: 3422"
+          formControlName="id"
+          (change)="clearErrorMessage()"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Referência</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ex: 78459485324"
+          formControlName="ref"
+          (change)="clearErrorMessage()"
+        />
+      </mat-form-field>
+      <button
+      mat-icon-button
+       id="search-button"
+        (click)="searchProduct()"
+      >
+        <mat-icon class="material-symbols-outlined">
+          search
+        </mat-icon>
+      </button>
+
+    </div>
+
+    <div class="form-field-container form-field-horizontal-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Nome</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="Ex: Calça"
+          formControlName="name"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Preço</mat-label>
+        <input readonly type="text" matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Qtd. Estoque</mat-label>
+        <input readonly type="text" matInput formControlName="stockQuantity" />
+      </mat-form-field>
+    </div>
+    <div class="errorMessageContainer" *ngIf="errorMessage != ''">
+      <span>
+        {{errorMessage}}
+      </span>
+    </div>
+    <div class="actions">
+      <button
+        mat-raised-button
+        type="button"
+        (click)="closeDialog()"
+        [ngStyle]="{color: '#000a'}"
+        class="close-dialog"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-raised-button
+        id="green-button"
+        type="submit"
+        (click)="submitDialog()"
+      >
+        <mat-icon class="material-symbols-outlined">
+          add
+        </mat-icon>
+        Adicionar
+      </button>
+    </div>
+  </form>
+</div>
