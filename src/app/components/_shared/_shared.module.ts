@@ -5,22 +5,27 @@ import { AngularMaterialModule } from "src/app/angular-material/angular-material
 import { FooterModifyResourceFormComponent } from "./forms/footer-modify-resource-form/footer-modify-resource-form.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DialogProductListAddComponent } from "./dialog-product-list-add/dialog-product-list-add.component";
+import { DialogConfirmComponent } from "./dialog-confirm/dialog-confirm.component";
+import { DialogInstallmentListAddComponent } from './dialog-installment-list-add/dialog-installment-list-add.component';
 
 @NgModule({
   declarations: [
     FooterRegisterResourceFormComponent,
     FooterModifyResourceFormComponent,
-    DialogProductListAddComponent
+    DialogProductListAddComponent,
+    DialogConfirmComponent,
+    DialogInstallmentListAddComponent
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [
     FooterRegisterResourceFormComponent,
     FooterModifyResourceFormComponent,
-    DialogProductListAddComponent
+    DialogProductListAddComponent,
+    DialogConfirmComponent
   ]
 })
 export class SharedModule { }

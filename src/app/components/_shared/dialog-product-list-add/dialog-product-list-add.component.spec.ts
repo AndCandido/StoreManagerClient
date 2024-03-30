@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DialogProductListAddComponent } from './dialog-product-list-add.component';
+import { DialogProductListAddComponent } from "./dialog-product-list-add.component";
 
-describe('DialogProductListAddComponent', () => {
+describe("DialogProductListAddComponent", () => {
   let component: DialogProductListAddComponent;
   let fixture: ComponentFixture<DialogProductListAddComponent>;
 
@@ -15,7 +15,7 @@ describe('DialogProductListAddComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

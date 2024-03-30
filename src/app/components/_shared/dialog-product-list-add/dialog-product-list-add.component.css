@@ -17,5 +17,13 @@
 .actions {
   margin-top: 15px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+}
+
+.small-form-field {
+  flex-shrink: 2;
+}
+
+.bigger-form-field {
+  flex-shrink: 1.5;
 }

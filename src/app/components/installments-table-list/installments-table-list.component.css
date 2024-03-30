@@ -1,0 +1,43 @@
+.installments-container {
+  margin-top: 30px;
+}
+
+.installments-list {
+  border: 1px solid #45454557;
+}
+
+.table-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-info, .sale-type {
+  display: flex;
+  gap: 10px;
+  background-color: #454545;
+  color: #fff;
+  padding: 10px 14px 10px 14px;
+}
+
+.table-info h4 {
+  font-size: 1.2rem;
+}
+
+.table-products-sold {
+  border-collapse: collapse;
+}
+
+tr.mat-mdc-header-row {
+  background-color: #454545;
+  color: #fff;
+}
+
+tr.mat-mdc-header-row, tr.mat-mdc-row{
+  font-size: .8rem;
+  height: .5rem !important;
+}
+
+.table-installments td, th {
+  text-align: center !important;
+}

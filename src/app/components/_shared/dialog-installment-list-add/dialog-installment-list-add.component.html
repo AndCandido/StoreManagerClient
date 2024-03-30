@@ -1,0 +1,38 @@
+<div class="form-add-installment">
+  <form [formGroup]="formGroup">
+    <div class="form-field-container">
+      <label for="isPaid" >Pago</label>
+      <input
+        id="isPaid"
+        type="checkbox"
+        formControlName="isPaid"
+      >
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de Vencimento</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="dueDate"
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Preço</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="price"
+        >
+      </mat-form-field>
+    </div>
+    <mat-dialog-actions>
+      <button
+        id="green-button"
+        mat-raised-button
+      >
+      Adicionar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

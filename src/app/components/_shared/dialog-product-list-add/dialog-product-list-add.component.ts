@@ -1,8 +1,9 @@
-import { DialogRef } from "@angular/cdk/dialog";
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialogRef } from "@angular/material/dialog";
 import Product from "src/app/models/Product";
 import { ProductsService } from "src/app/services/products.service";
+import { ProductToSold } from "src/types/types";
 
 @Component({
   selector: "app-dialog-product-list-add",
@@ -20,7 +21,7 @@ export class DialogProductListAddComponent {
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductsService,
-    private dialogRef: DialogRef
+    private dialogRef: MatDialogRef<ProductToSold>
   )
   {}
 
@@ -34,7 +35,8 @@ export class DialogProductListAddComponent {
       ref: ["", [Validators.min(0)]],
       name: "",
       price:"",
-      stockQuantity: ""
+      stockQuantity: "",
+      quantitySold: [1, [Validators.required]]
     });
   }
 
@@ -54,19 +56,24 @@ export class DialogProductListAddComponent {
       error: (err) => {
         this.canSubmitDialog = true;
         this.errorMessage = "Produto não encontrado";
-        const productId = this.formGroup.get("id")?.value;
-        this.formGroup.reset({ id: productId });
         console.error(err);
+        this.resetFormGroup();
       },
     });
+  }
+
+  resetFormGroup() {
+    const productId = this.formGroup.get("id")?.value;
+    const quantitySold = this.formGroup.get("quantitySold")?.value;
+    this.formGroup.reset({ id: productId, quantitySold });
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
-  submitDialog() {
-    if(!this.canSubmitDialog) return;
+  closeDialogWithResult() {
+    if(!this.canSubmitDialog || !this.formGroup.valid) return;
     this.dialogRef.close(this.formGroup.value);
   }
 }

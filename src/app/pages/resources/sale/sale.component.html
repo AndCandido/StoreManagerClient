@@ -1,16 +1,20 @@
 <mat-tab-group>
   <mat-tab label="Realizar Venda">
     <section class="tab-content">
-      <button
-        mat-raised-button
-        id="green-button"
-        (click)="onAddProduct()"
-      >
-        <mat-icon class="material-symbols-outlined">
-          add
-        </mat-icon>
-        <mat-label>Adicionar</mat-label>
-      </button>
+      <div class="sale-resources-container">
+        <app-products-sold-table-list
+          (updateProductsListEvent)="onUpdateProductsListEvent($event)"
+        />
+        <app-installments-table-list
+          *ngIf="saleInfo"
+          [totalPayable]="saleInfo.totalPayable"
+        />
+      </div>
+      <app-sale-info
+        *ngIf="productsList"
+        [productsList]="productsList"
+        (saleInfoChange)="onSaleInfoChange($event)"
+      />
     </section>
   </mat-tab>
 </mat-tab-group>

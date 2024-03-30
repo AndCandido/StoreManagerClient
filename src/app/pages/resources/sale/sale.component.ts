@@ -1,23 +1,26 @@
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material/dialog";
-import { DialogProductListAddComponent } from "src/app/components/_shared/dialog-product-list-add/dialog-product-list-add.component";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { ProductToSold, SaleInfo } from "src/types/types";
 
 @Component({
   selector: "app-sale",
   templateUrl: "./sale.component.html",
   styleUrls: ["./sale.component.css"]
 })
-export class SaleComponent implements OnInit {
+export class SaleComponent {
+  productsList!: ProductToSold[];
+  saleInfo!: SaleInfo;
 
   constructor(
-    private matDialog: MatDialog
+    private changeDetector: ChangeDetectorRef
   ) {}
 
-  ngOnInit(): void {
-    this.onAddProduct();
+  onUpdateProductsListEvent(event: ProductToSold[]) {
+    this.productsList = event;
+    this.changeDetector.detectChanges();
   }
 
-  onAddProduct() {
-    this.matDialog.open(DialogProductListAddComponent);
+  onSaleInfoChange(event: SaleInfo) {
+    this.saleInfo = event;
+    this.changeDetector.detectChanges();
   }
 }

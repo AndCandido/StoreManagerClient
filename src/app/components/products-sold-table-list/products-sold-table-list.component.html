@@ -1,0 +1,99 @@
+<div class="products-sold-list">
+  <div class="table-info">
+    <h4>Lista de Produtos</h4>
+    <button
+      mat-icon-button
+      id="green-button"
+      (click)="onAddProduct()"
+    >
+      <mat-icon class="material-symbols-outlined"> add </mat-icon>
+    </button>
+  </div>
+
+  <table
+    mat-table
+    class="table-products-sold"
+    [dataSource]="productsList"
+  >
+    <ng-container matColumnDef="id">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 10% !important"
+      >
+        Id
+      </th>
+      <td mat-cell *matCellDef="let product">{{ product.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="ref">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 20% !important"
+      >
+        Ref
+      </th>
+      <td mat-cell *matCellDef="let product">{{ product.ref }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 20% !important"
+      >
+        Nome
+      </th>
+      <td mat-cell *matCellDef="let product">{{ product.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 10% !important"
+      >
+        Preço
+      </th>
+      <td mat-cell *matCellDef="let product">{{ product.price }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qtd">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 10% !important"
+      >
+        Qtd
+      </th>
+      <td mat-cell *matCellDef="let product">
+        {{ product.quantitySold }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        style="width: 3% !important"
+      >
+        Açoes
+      </th>
+      <td mat-cell *matCellDef="let product">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="onDeleteProductSoldToList(product)"
+        >
+          <mat-icon class="material-symbols-outlined">
+            delete
+          </mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

@@ -1,0 +1,29 @@
+<div class="sale-info">
+  <div class="sale-info-field gross-total">
+    <span class="sale-info-field-title">Total Bruto: </span>
+    <input
+      class="sale-info-field-value"
+      readonly
+      type="text"
+      [(ngModel)]="saleInfo.totalGross"
+    />
+  </div>
+  <div class="sale-info-field discount">
+    <span class="sale-info-field-title">Desconto %: </span>
+    <input
+      class="sale-info-field-value"
+      type="number"
+      [(ngModel)]="saleInfo.discount"
+      (ngModelChange)="calcSaleInfoTotalPayablePerDiscount(); emitSaleInfoChange()"
+      />
+  </div>
+  <div class="sale-info-field total-payable">
+    <span class="sale-info-field-title">Total: </span>
+    <input
+      class="sale-info-field-value"
+      type="number"
+      [(ngModel)]="saleInfo.totalPayable"
+      (ngModelChange)="calcSaleInfoDiscountPerTotalPayable(); emitSaleInfoChange()"
+      />
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="formGroup">
     <div class="form-field-container form-field-horizontal-container">
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="small-form-field">
         <mat-label>Id</mat-label>
         <input
           type="text"
@@ -11,7 +11,7 @@
           (change)="clearErrorMessage()"
         />
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="bigger-form-field">
         <mat-label>Referência</mat-label>
         <input
           type="text"
@@ -21,16 +21,25 @@
           (change)="clearErrorMessage()"
         />
       </mat-form-field>
+      <mat-form-field appearance="outline" class="small-form-field">
+        <mat-label>Quantidade p/ venda</mat-label>
+        <input
+          type="number"
+          matInput
+          formControlName="quantitySold"
+          autocomplete="off"
+        />
+      </mat-form-field>
+
       <button
-      mat-icon-button
-       id="search-button"
+        mat-icon-button
+        id="search-button"
         (click)="searchProduct()"
       >
         <mat-icon class="material-symbols-outlined">
           search
         </mat-icon>
       </button>
-
     </div>
 
     <div class="form-field-container form-field-horizontal-container">
@@ -57,13 +66,13 @@
         {{errorMessage}}
       </span>
     </div>
-    <div class="actions">
+    <mat-dialog-actions class="actions">
       <button
         mat-raised-button
         type="button"
-        (click)="closeDialog()"
         [ngStyle]="{color: '#000a'}"
         class="close-dialog"
+        (click)="closeDialog()"
       >
         Cancelar
       </button>
@@ -71,13 +80,13 @@
         mat-raised-button
         id="green-button"
         type="submit"
-        (click)="submitDialog()"
+        (click)="closeDialogWithResult()"
       >
         <mat-icon class="material-symbols-outlined">
           add
         </mat-icon>
         Adicionar
       </button>
-    </div>
+    </mat-dialog-actions>
   </form>
 </div>

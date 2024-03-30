@@ -4,7 +4,7 @@ import Customer from "src/app/models/Customer";
 import { DialogData, EmitEventOptions } from "src/types/types";
 import { CustomersService } from "src/app/services/customers.service";
 import { Observer } from "rxjs";
-import { DialogBoxComponent } from "../../dialog-box/dialog-box.component";
+import { DialogConfirmComponent } from "../../_shared/dialog-confirm/dialog-confirm.component";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
@@ -135,7 +135,7 @@ export class CustomerFormComponent implements OnInit, OnChanges {
   }
 
   openDialog(dialogData: DialogData) {
-    return this.dialog.open(DialogBoxComponent, {
+    return this.dialog.open(DialogConfirmComponent, {
       data: dialogData
     });
   }

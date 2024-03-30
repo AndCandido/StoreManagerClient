@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import Product from "src/app/models/Product";
 import { ProductsService } from "src/app/services/products.service";
 import { DialogData, EmitEventOptions } from "src/types/types";
-import { DialogBoxComponent } from "../../dialog-box/dialog-box.component";
+import { DialogConfirmComponent } from "../../_shared/dialog-confirm/dialog-confirm.component";
 import { Observer } from "rxjs";
 
 @Component({
@@ -153,7 +153,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
   }
 
   openDialog(dialogData: DialogData) {
-    return this.dialog.open(DialogBoxComponent, {
+    return this.dialog.open(DialogConfirmComponent, {
       data: dialogData
     });
   }

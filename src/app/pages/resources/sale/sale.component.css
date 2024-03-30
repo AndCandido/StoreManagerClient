@@ -3,7 +3,14 @@ mat-tab-group {
 }
 
 .tab-content {
-  padding: 1rem;
   display: flex;
-  justify-content: center;
+  padding: 1rem 2rem 1rem 2rem;
+}
+
+.sale-resources-container {
+  flex-grow: 100;
+}
+
+app-sale-info {
+  flex-grow: 1;
 }

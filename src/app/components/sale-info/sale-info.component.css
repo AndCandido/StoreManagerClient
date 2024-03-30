@@ -1,0 +1,33 @@
+.sale-info {
+  max-width: 240px;
+  margin-left: 30px;
+  margin-top: 30px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(143, 143, 140, 0.2);
+}
+
+.sale-info .gross-total, .sale-info .discount {
+  font-size: 1.4rem;
+}
+
+.sale-info input {
+  border: none;
+  outline: 1px #0003 solid;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+.sale-info .total-payable {
+  font-size: 2rem;
+}
+
+.sale-info .total-payable input {
+  background-color: #daf060;
+}
+
+.sale-info .sale-info-field {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
