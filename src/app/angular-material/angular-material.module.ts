@@ -8,6 +8,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatIconModule } from "@angular/material/icon";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 
 @NgModule({
   exports: [
@@ -18,6 +19,7 @@ import { MatIconModule } from "@angular/material/icon";
     MatTableModule,
     MatDialogModule,
     MatSnackBarModule,
+    MatAutocompleteModule,
     MatIconModule
   ]
 })

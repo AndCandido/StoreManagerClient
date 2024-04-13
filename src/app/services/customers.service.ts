@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import Customer from "../models/Customer";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import environments from "src/environments/environments";
 import { Observable } from "rxjs";
 
@@ -32,5 +32,10 @@ export class CustomersService {
 
   deleteCustomer(id: string): Observable<Customer> {
     return this.http.delete<Customer>(`${this.resourceUrl}/${id}`, { headers: this.headers });
+  }
+
+  getByName(name: string): Observable<Customer[]> {
+    const params = new HttpParams().set("customerName", name);
+    return this.http.get<Customer[]>(this.resourceUrl, { headers: this.headers, params });
   }
 }

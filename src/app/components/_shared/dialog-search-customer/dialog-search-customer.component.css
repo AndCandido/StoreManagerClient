@@ -1,0 +1,29 @@
+:host > div {
+  padding: 20px;
+  min-width: 600px;
+}
+
+.dialog-title {
+  margin-bottom: 15px;
+}
+
+.search-inputs-container {
+  display: flex;
+  gap: 10px;
+}
+
+.search-inputs-container > * {
+  flex-grow: 1;
+}
+
+.customers-found-tabletd td, .customers-found-table th {
+  text-align: center !important;
+}
+
+.customers-found-table .table-row {
+  cursor: pointer;
+}
+
+.customers-found-table .table-row:hover {
+  background-color: #2222;
+}

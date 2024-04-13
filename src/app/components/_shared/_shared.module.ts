@@ -3,10 +3,11 @@ import { CommonModule } from "@angular/common";
 import { FooterRegisterResourceFormComponent } from "./forms/footer-register-resource-form/footer-register-resource-form.component";
 import { AngularMaterialModule } from "src/app/angular-material/angular-material.module";
 import { FooterModifyResourceFormComponent } from "./forms/footer-modify-resource-form/footer-modify-resource-form.component";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DialogProductListAddComponent } from "./dialog-product-list-add/dialog-product-list-add.component";
 import { DialogConfirmComponent } from "./dialog-confirm/dialog-confirm.component";
-import { DialogInstallmentListAddComponent } from './dialog-installment-list-add/dialog-installment-list-add.component';
+import { DialogInstallmentListAddComponent } from "./dialog-installment-list-add/dialog-installment-list-add.component";
+import { DialogSearchCustomerComponent } from "./dialog-search-customer/dialog-search-customer.component";
 
 @NgModule({
   declarations: [
@@ -14,11 +15,13 @@ import { DialogInstallmentListAddComponent } from './dialog-installment-list-add
     FooterModifyResourceFormComponent,
     DialogProductListAddComponent,
     DialogConfirmComponent,
-    DialogInstallmentListAddComponent
+    DialogInstallmentListAddComponent,
+    DialogSearchCustomerComponent
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   exports: [

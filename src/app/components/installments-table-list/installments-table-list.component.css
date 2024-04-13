@@ -6,13 +6,19 @@
   border: 1px solid #45454557;
 }
 
+.btn-search-customer, .btn-clear-customer {
+  color: #fff;
+  background-color: #2222;
+  margin-left: 5px;
+}
+
 .table-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.table-info, .sale-type {
+.table-info, .installments-info-container {
   display: flex;
   gap: 10px;
   background-color: #454545;
@@ -20,10 +26,33 @@
   padding: 10px 14px 10px 14px;
 }
 
+.installments-info-container {
+  gap: 25px;
+}
+
+.installments-info-container .installments-info {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.installments-info-container #input-installments-count {
+  max-width: 50px;
+  text-align: right;
+}
+
+.installments-info-container input {
+  outline: none;
+}
+
+.installments-info-container #input-customer-name {
+  min-width: 300px;
+  font-size: 1rem;
+}
+
 .table-info h4 {
   font-size: 1.2rem;
 }
-
 .table-products-sold {
   border-collapse: collapse;
 }
@@ -35,7 +64,7 @@ tr.mat-mdc-header-row {
 
 tr.mat-mdc-header-row, tr.mat-mdc-row{
   font-size: .8rem;
-  height: .5rem !important;
+  height: 2.2rem !important;
 }
 
 .table-installments td, th {
