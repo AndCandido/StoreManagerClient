@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import Product from "../models/Product";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import environments from "src/environments/environments";
+import Product from "../models/Product";
 import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
-export class ProductsService {
+export class ProductService {
   private resourceUrl = environments.apiUrl + "/products";
   private headers = new HttpHeaders()
     .append("Authorization", environments.basicAuth);

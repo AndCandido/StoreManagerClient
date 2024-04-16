@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { InstallmentSale } from "src/types/types";
 import { DialogSearchCustomerComponent } from "../_shared/dialog-search-customer/dialog-search-customer.component";
 import Customer from "src/app/models/Customer";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import Installment from "src/app/models/Installment";
 
 @Component({
   selector: "app-installments-table-list",
@@ -12,8 +13,11 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 })
 export class InstallmentsTableListComponent implements OnChanges, OnInit {
   @Input({ required: true }) totalPayable!: number;
+  @Input() installmentsList!: Installment[];
+  @Output() installmentsListChange: EventEmitter<Installment[]> = new EventEmitter();
+  @Output() customerChange: EventEmitter<Customer> = new EventEmitter();
+
   installmentsCount!: number;
-  installmentsList!: InstallmentSale[];
   displayedColumns!: string[];
   customer?: Customer;
 
@@ -23,11 +27,12 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
   ) {
     this.installmentsCount = 1;
     this.installmentsList = [];
-    this.displayedColumns = ["isPaid", "dueDate", "price"];
+    this.displayedColumns = ["isPaid", "dueDate", "paymentMethod", "price"];
   }
 
   ngOnInit(): void {
     this.setCashSaleForInstallmentsList();
+    this.installmentsListChange.emit(this.installmentsList);
   }
 
   onSearchCustomer() {
@@ -40,6 +45,7 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
       .subscribe(result => {
         if(!result) return;
         this.customer = result;
+        this.customerChange.emit(this.customer);
       });
   }
 
@@ -47,12 +53,13 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
     this.installmentsList = [{
       dueDate: new Date,
       isPaid: true,
-      price: this.totalPayable
+      price: this.totalPayable,
     }];
   }
 
   ngOnChanges(): void {
     this.onUpdateTotalPayable();
+    this.installmentsListChange.emit(this.installmentsList);
   }
 
   onUpdateTotalPayable() {
@@ -67,7 +74,7 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
   updateInstallmentsPrice() {
     const priceForInstallments = this.totalPayable / this.installmentsCount;
 
-    this.installmentsList.forEach((installment: InstallmentSale) => {
+    this.installmentsList.forEach((installment: Installment) => {
       installment.price = parseFloat(priceForInstallments.toFixed(2));
     });
   }
@@ -96,6 +103,8 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
         price: priceForInstallments
       };
     }
+
+    this.installmentsListChange.emit(this.installmentsList);
   }
 
   onDeleteInstallmentToList(installment: InstallmentSale) {
@@ -117,6 +126,7 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
 
   clearCustomer() {
     this.customer = undefined;
+    this.customerChange.emit(this.customer);
 
     this.installmentsCount = 1;
     this.setCashSaleForInstallmentsList();

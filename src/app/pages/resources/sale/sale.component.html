@@ -3,17 +3,20 @@
     <section class="tab-content">
       <div class="sale-resources-container">
         <app-products-sold-table-list
-          (updateProductsListEvent)="onUpdateProductsListEvent($event)"
+          [(productsList)]="productsList"
         />
         <app-installments-table-list
-          *ngIf="saleInfo"
+          *ngIf="saleInfo && productsList.length > 0"
           [totalPayable]="saleInfo.totalPayable"
+          [(installmentsList)]="installmentsList"
+          (customerChange)="onCustomerChange($event)"
         />
       </div>
       <app-sale-info
         *ngIf="productsList"
+        [(saleInfo)]="saleInfo"
         [productsList]="productsList"
-        (saleInfoChange)="onSaleInfoChange($event)"
+        (finishSaleEvent)="onFinishSale()"
       />
     </section>
   </mat-tab>

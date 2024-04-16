@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialogRef } from "@angular/material/dialog";
 import Product from "src/app/models/Product";
-import { ProductsService } from "src/app/services/products.service";
+import { ProductService } from "src/app/services/product.service";
 import { ProductToSold } from "src/types/types";
 
 @Component({
@@ -20,7 +20,7 @@ export class DialogProductListAddComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private productService: ProductsService,
+    private productService: ProductService,
     private dialogRef: MatDialogRef<ProductToSold>
   )
   {}

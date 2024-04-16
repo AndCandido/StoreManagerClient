@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angu
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import Product from "src/app/models/Product";
-import { ProductsService } from "src/app/services/products.service";
+import { ProductService } from "src/app/services/product.service";
 import { DialogData, EmitEventOptions } from "src/types/types";
 import { DialogConfirmComponent } from "../../_shared/dialog-confirm/dialog-confirm.component";
 import { Observer } from "rxjs";
@@ -25,7 +25,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private productService: ProductsService,
+    private productService: ProductService,
     private dialog: MatDialog
   ) { }
 

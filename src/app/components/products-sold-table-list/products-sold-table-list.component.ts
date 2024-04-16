@@ -1,8 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { DialogProductListAddComponent } from "../_shared/dialog-product-list-add/dialog-product-list-add.component";
 import { MatDialog } from "@angular/material/dialog";
 import { ProductToSold } from "src/types/types";
 import { DialogConfirmComponent } from "../_shared/dialog-confirm/dialog-confirm.component";
+import { ProductService } from "src/app/services/product.service";
+import Product from "src/app/models/Product";
 
 @Component({
   selector: "app-products-sold-table-list",
@@ -10,45 +12,35 @@ import { DialogConfirmComponent } from "../_shared/dialog-confirm/dialog-confirm
   styleUrls: ["./products-sold-table-list.component.css"]
 })
 export class ProductsSoldTableListComponent implements OnInit {
-  @Output() updateProductsListEvent: EventEmitter<ProductToSold[]> = new EventEmitter;
-  productsList: ProductToSold[];
+  @Input() productsList: ProductToSold[];
+  @Output() productsListChange: EventEmitter<ProductToSold[]> = new EventEmitter;
   displayedColumns: string[];
 
   constructor(
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private productService: ProductService,
   )
   {
-    this.productsList = [
-      {
-        id: 12,
-        name: "Calça",
-        price: 10.10,
-        quantitySold: 4,
-        ref: "4332432",
-
-      },
-      {
-        id: 132,
-        name: "Calça",
-        price: 15.44,
-        quantitySold: 4,
-        ref: "4332432",
-
-      },
-      {
-        id: 152,
-        name: "Calça",
-        price: 10,
-        quantitySold: 4,
-        ref: "4332432",
-      }
-    ];
+    this.productsList = [];
     this.displayedColumns = [ "id", "ref", "name", "price", "qtd", "actions"];
   }
 
   ngOnInit(): void {
     if(this.productsList)
-      this.updateProductsListEvent.emit(this.productsList);
+      this.productsListChange.emit(this.productsList);
+
+    ////
+    this.productService.getProductById(1).subscribe({
+      next: (value: Product) => {
+        const pts:ProductToSold = { id: 1, name: value.name, price: value.price, quantitySold: 1, ref: value.ref.toFixed(1) };
+        this.productsList = [pts];
+        this.productsListChange.emit(this.productsList);
+      },
+      error: () => {
+      }
+    });
+
+    ////
   }
 
   onAddProduct() {
@@ -57,7 +49,7 @@ export class ProductsSoldTableListComponent implements OnInit {
         if(!result) return;
         this.productsList = [...this.productsList , result];
 
-        this.updateProductsListEvent.emit(this.productsList);
+        this.productsListChange.emit(this.productsList);
       });
   }
 
@@ -71,7 +63,7 @@ export class ProductsSoldTableListComponent implements OnInit {
     dialogConfirmRef.afterClosed().subscribe(result => {
       if(result) {
         this.deleteProductSoldToList(product);
-        this.updateProductsListEvent.emit(this.productsList);
+        this.productsListChange.emit(this.productsList);
       }
     });
   }

@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import Customer from "src/app/models/Customer";
-import { CustomersService } from "src/app/services/customers.service";
+import { CustomerService } from "src/app/services/customer.service";
 
 @Component({
   selector: "app-dialog-search-customer",
@@ -16,7 +16,7 @@ export class DialogSearchCustomerComponent {
   customerNameToSearch!: string;
 
   constructor(
-    private customerService: CustomersService,
+    private customerService: CustomerService,
     private snackBar: MatSnackBar,
     private matDialogRef: MatDialogRef<DialogSearchCustomerComponent>
   ) {

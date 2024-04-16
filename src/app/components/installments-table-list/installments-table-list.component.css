@@ -62,11 +62,22 @@ tr.mat-mdc-header-row {
   color: #fff;
 }
 
-tr.mat-mdc-header-row, tr.mat-mdc-row{
+tr.mat-mdc-header-row, tr.mat-mdc-row, mat-select {
   font-size: .8rem;
   height: 2.2rem !important;
 }
 
+mat-select {
+  display: flex;
+  align-content: center;
+}
+
 .table-installments td, th {
   text-align: center !important;
+}
+
+.select-payment-method {
+  padding: 5px;
+  background-color: transparent;
+  border: none;
 }

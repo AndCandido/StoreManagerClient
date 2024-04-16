@@ -8,9 +8,10 @@ import { calcDiscountPerTotalPayable, calcTotalPayablePerDiscount } from "src/ut
   styleUrls: ["./sale-info.component.css"]
 })
 export class SaleInfoComponent implements OnInit, OnChanges {
+  @Input() saleInfo!: SaleInfo;
   @Input() productsList!: ProductToSold[];
   @Output() saleInfoChange: EventEmitter<SaleInfo> = new EventEmitter<SaleInfo>();
-  saleInfo!: SaleInfo;
+  @Output() finishSaleEvent: EventEmitter<void> = new EventEmitter<void>();
 
   ngOnInit(): void {
     const totalGross = parseFloat(this.calcTotalGross().toFixed(2));
@@ -52,6 +53,10 @@ export class SaleInfoComponent implements OnInit, OnChanges {
   calcTotalGross() {
     if(!this.productsList) return 0;
     return this.productsList.reduce((acl, cur) => acl + (cur.price * cur.quantitySold) , 0);
+  }
+
+  onFinishSale() {
+    this.finishSaleEvent.emit();
   }
 
   emitSaleInfoChange() {

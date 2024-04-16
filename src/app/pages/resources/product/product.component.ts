@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import Product from "src/app/models/Product";
-import { ProductsService } from "src/app/services/products.service";
+import { ProductService } from "src/app/services/product.service";
 import { EmitEventOptions } from "src/types/types";
 
 @Component({
@@ -16,7 +16,7 @@ export class ProductComponent implements OnInit {
   productSelected!: Product;
 
   constructor(
-    private productsService: ProductsService,
+    private productsService: ProductService,
     private snackBar: MatSnackBar
   ) {}
 

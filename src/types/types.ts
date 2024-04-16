@@ -1,3 +1,6 @@
+import Customer from "src/app/models/Customer";
+import Installment from "src/app/models/Installment";
+
 export type EmitEventOptions = {
   snackBarMessage: string
 };
@@ -21,7 +24,6 @@ export type SaleInfo = {
 }
 
 export type InstallmentSale = {
-  dueDate: Date
-  price: number
-  isPaid: boolean
+  customer: Customer;
+  installments: Installment[]
 }

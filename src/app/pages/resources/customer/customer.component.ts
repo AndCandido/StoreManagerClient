@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import Customer from "src/app/models/Customer";
-import { CustomersService } from "src/app/services/customers.service";
+import { CustomerService } from "src/app/services/customer.service";
 import { EmitEventOptions } from "src/types/types";
 
 @Component({
@@ -16,7 +16,7 @@ export class CustomerComponent implements OnInit {
   customers!: Customer[];
 
   constructor(
-    private customersService: CustomersService,
+    private customersService: CustomerService,
     private snackBar: MatSnackBar
   )
   {}

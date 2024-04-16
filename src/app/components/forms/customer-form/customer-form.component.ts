@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angu
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import Customer from "src/app/models/Customer";
 import { DialogData, EmitEventOptions } from "src/types/types";
-import { CustomersService } from "src/app/services/customers.service";
+import { CustomerService } from "src/app/services/customer.service";
 import { Observer } from "rxjs";
 import { DialogConfirmComponent } from "../../_shared/dialog-confirm/dialog-confirm.component";
 import { MatDialog } from "@angular/material/dialog";
@@ -25,7 +25,7 @@ export class CustomerFormComponent implements OnInit, OnChanges {
 
   constructor (
     private formBuilder: FormBuilder,
-    private customerService: CustomersService,
+    private customerService: CustomerService,
     private dialog: MatDialog
   )
   {}

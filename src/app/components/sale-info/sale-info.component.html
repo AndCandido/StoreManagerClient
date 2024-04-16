@@ -26,4 +26,15 @@
       (ngModelChange)="calcSaleInfoDiscountPerTotalPayable(); emitSaleInfoChange()"
       />
   </div>
+
+  <div class="sale-info-footer">
+    <button
+      class="btn-finish-sale"
+      mat-raised-button
+      id="green-button"
+      (click)="onFinishSale()"
+    >
+      Finalizar Venda
+    </button>
+  </div>
 </div>
