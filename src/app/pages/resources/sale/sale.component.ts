@@ -16,7 +16,7 @@ export class SaleComponent {
   productsList!: ProductToSold[];
   saleInfo!: SaleInfo;
   installmentsList!: Installment[];
-  customer!: Customer;
+  customer?: Customer;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -28,15 +28,23 @@ export class SaleComponent {
 
   onFinishSale() {
     const sale = this.makeSaleToRequest();
+    console.log(sale);
     this.saleService.saveSale(sale).subscribe({
       next: () => {
         this.openSnackBar("Venda realizada com sucesso");
+        this.clearSaleResources();
       },
       error: (err) => {
         this.openSnackBar(err.error.errors);
         console.error(err);
       },
     });
+  }
+
+  clearSaleResources() {
+    this.productsList = [];
+    this.installmentsList = [];
+    this.customer = undefined;
   }
 
   onCustomerChange(customer: Customer) {
@@ -46,7 +54,7 @@ export class SaleComponent {
   makeSaleToRequest(): Sale {
     const sale = new Sale;
     sale.price = this.saleInfo.totalPayable;
-    sale.customer = this.customer;
+    sale.customerId = this.customer?.id;
     sale.productsSold = this.productsList.map((product: ProductToSold): ProductSold => {
       const producutSold = new ProductSold;
       producutSold.productId = product.id;

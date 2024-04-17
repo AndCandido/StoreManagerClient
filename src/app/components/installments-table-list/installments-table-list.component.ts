@@ -51,9 +51,9 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
 
   setCashSaleForInstallmentsList() {
     this.installmentsList = [{
-      dueDate: new Date,
       isPaid: true,
       price: this.totalPayable,
+      paymentMethod: "money"
     }];
   }
 
@@ -75,7 +75,7 @@ export class InstallmentsTableListComponent implements OnChanges, OnInit {
     const priceForInstallments = this.totalPayable / this.installmentsCount;
 
     this.installmentsList.forEach((installment: Installment) => {
-      installment.price = parseFloat(priceForInstallments.toFixed(2));
+      installment.price = priceForInstallments;
     });
   }
 
